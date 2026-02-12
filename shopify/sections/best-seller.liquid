@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shop our best-selling products with exclusive discounts. High-quality items with verified customer reviews.">
+    <title>Best Sellers - Premium Products Collection</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        /* Custom scrollbar styles for desktop carousel */
+        .scrollbar-custom::-webkit-scrollbar {
+            height: 4px;
+        }
+        
+        .scrollbar-custom::-webkit-scrollbar-track {
+            background: #e5e7eb;
+            border-radius: 10px;
+        }
+        
+        .scrollbar-custom::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 10px;
+            transition: height 0.3s ease;
+        }
+        
+        .scrollbar-custom:hover::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+            background: #111827;
+        }
+
+        /* Smooth dropdown animation for mobile */
+        .product-grid {
+            transition: max-height 0.5s ease-in-out;
+        }
+
+        /* Image aspect ratio container */
+        .product-image-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%; /* 1:1 Aspect Ratio */
+            overflow: hidden;
+            background: #f3f4f6;
+            border-radius: 10px;
+        }
+
+        /* Product card border radius */
+        .product-card {
+            border-radius: 10px;
+        }
+
+        /* Product info padding */
+        .product-info {
+            padding: 12px;
+        }
+
+        /* Container with overflow on right side only (desktop) */
+        .container-custom {
+            max-width: 1280px; /* Same as max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (min-width: 768px) {
+            .container-custom {
+                padding-left: 2rem; /* Same as px-8 */
+                padding-right: 0; /* No padding on right to allow overflow */
+                margin-right: 0; /* Remove right margin */
+                max-width: none; /* Remove max width on desktop */
+            }
+        }
+
+        .product-image-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-image-container .hover-image {
+            opacity: 0;
+        }
+
+        .product-card:hover .product-image-container .hover-image {
+            opacity: 1;
+        }
+
+        .product-card:hover .product-image-container .default-image {
+            opacity: 0;
+        }
+
+        /* Badge styles */
+        .badge {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1.5px solid;
+        }
+
+        /* Star rating */
+        .star-rating {
+            color: #000;
+        }
+
+        /* Show More button animation */
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
+
+        .transition-transform {
+            transition: transform 0.3s ease;
+        }
+
+        /* Desktop: Peek effect for 5th card */
+        @media (min-width: 768px) {
+            .carousel-container {
+                display: flex;
+                overflow-x: auto;
+                scroll-behavior: smooth;
+                gap: 1rem;
+                padding-bottom: 1rem;
+            }
+
+            .product-card {
+                flex: 0 0 calc(25% - 0.75rem);
+                min-width: 250px;
+            }
+
+            /* Show peek of 5th card */
+            .carousel-container::after {
+                content: '';
+                flex: 0 0 calc(12.5% - 0.5rem);
+                min-width: 125px;
+            }
+        }
+
+        /* Mobile: Grid layout */
+        @media (max-width: 767px) {
+            .mobile-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white font-sans antialiased">
+    
+    <!-- Best Sellers Section -->
+    <section class="best-sellers-wrapper py-12" aria-labelledby="best-sellers-heading">
+        
+        <div class="container-custom">
+        
+        <!-- Section Header -->
+        <header class="mb-8 px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between">
+                <h2 id="best-sellers-heading" class="text-4xl md:text-5xl font-bold text-gray-900">
+                    Best Sellers
+                </h2>
+                <!-- Desktop: Shop All Link -->
+                <a href="#" class="hidden md:flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors group">
+                    Shop All Best Sellers
+                    <svg class="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </a>
+            </div>
+        </header>
+
+        <!-- Desktop Carousel -->
+        <div class="hidden md:block">
+            <div class="carousel-container scrollbar-custom" role="list" aria-label="Best selling products">
+                
+                <!-- Product Card 1 -->
+                <article class="product-card bg-white overflow-hidden" role="listitem">
+                    <div class="relative">
+                        <!-- Badges -->
+                        <div class="absolute top-3 left-3 z-10 flex gap-2">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                        </div>
+                        
+                        <!-- Product Images -->
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600&fit=crop" 
+                                 alt="Outside Vibes T-Shirt Sunshine - Black wireless headphones on yellow background" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1545127398-14699f92334b?w=600&h=600&fit=crop" 
+                                 alt="Outside Vibes T-Shirt Sunshine - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <!-- Product Info -->
+                    <div class="product-info">
+                        <h3 class="text-sm font-bold text-gray-900 uppercase mb-2">
+                            Outside Vibes T-Shirt Sunshine
+                        </h3>
+                        
+                        <!-- Rating -->
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="flex star-rating" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-xs text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <!-- Price -->
+                        <p class="text-lg font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <!-- Product Card 2 -->
+                <article class="product-card bg-white overflow-hidden" role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-3 left-3 z-10 flex gap-2">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                            <span class="badge bg-green-800 border-green-800 text-white">Save 10%</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600&h=600&fit=crop" 
+                                 alt="Hike Bottle Outside Vibes - Black sunglasses on white background" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600&h=600&fit=crop" 
+                                 alt="Hike Bottle Outside Vibes - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="product-info">
+                        <h3 class="text-sm font-bold text-gray-900 uppercase mb-2">
+                            Hike Bottle Outside Vibes
+                        </h3>
+                        
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="flex star-rating" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-xs text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-lg font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <!-- Product Card 3 -->
+                <article class="product-card bg-white overflow-hidden" role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-3 left-3 z-10 flex gap-2">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=600&fit=crop" 
+                                 alt="Rest in Nature T-Shirt Charcoal - Red Nike running shoes" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&h=600&fit=crop" 
+                                 alt="Rest in Nature T-Shirt Charcoal - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="product-info">
+                        <h3 class="text-sm font-bold text-gray-900 uppercase mb-2">
+                            Rest in Nature T-Shirt Charcoal
+                        </h3>
+                        
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="flex star-rating" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-xs text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-lg font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <!-- Product Card 4 -->
+                <article class="product-card bg-white overflow-hidden" role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-3 left-3 z-10 flex gap-2">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                            <span class="badge bg-green-800 border-green-800 text-white">Save 10%</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=600&h=600&fit=crop" 
+                                 alt="Outside Vibes Cap Forest Green - Yellow banana on pink background" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1603833797131-3c0a60c4e9f3?w=600&h=600&fit=crop" 
+                                 alt="Outside Vibes Cap Forest Green - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="product-info">
+                        <h3 class="text-sm font-bold text-gray-900 uppercase mb-2">
+                            Outside Vibes Cap Forest Green
+                        </h3>
+                        
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="flex star-rating" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-xs text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-lg font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <!-- Product Card 5 (Peek) -->
+                <article class="product-card bg-white overflow-hidden" role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-3 left-3 z-10 flex gap-2">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop" 
+                                 alt="Mountain Peak Jacket Navy - Stylish watch on minimalist background" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=600&fit=crop" 
+                                 alt="Mountain Peak Jacket Navy - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="product-info">
+                        <h3 class="text-sm font-bold text-gray-900 uppercase mb-2">
+                            Mountain Peak Jacket Navy
+                        </h3>
+                        
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="flex star-rating" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-xs text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-lg font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <!-- Product Card 6 -->
+                <article class="product-card bg-white overflow-hidden" role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-3 left-3 z-10 flex gap-2">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                            <span class="badge bg-green-800 border-green-800 text-white">Save 10%</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=600&h=600&fit=crop" 
+                                 alt="Trail Runner Shoes Midnight - Modern backpack on clean background" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=600&fit=crop" 
+                                 alt="Trail Runner Shoes Midnight - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="product-info">
+                        <h3 class="text-sm font-bold text-gray-900 uppercase mb-2">
+                            Trail Runner Shoes Midnight
+                        </h3>
+                        
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="flex star-rating" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-xs text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-lg font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <!-- Product Card 7 -->
+                <article class="product-card bg-white overflow-hidden" role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-3 left-3 z-10 flex gap-2">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=600&h=600&fit=crop" 
+                                 alt="Summit Hoodie Slate Gray - Vintage camera on neutral surface" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1606078363854-c5aa5c9a7c94?w=600&h=600&fit=crop" 
+                                 alt="Summit Hoodie Slate Gray - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="product-info">
+                        <h3 class="text-sm font-bold text-gray-900 uppercase mb-2">
+                            Summit Hoodie Slate Gray
+                        </h3>
+                        
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="flex star-rating" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-xs text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-lg font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <!-- Product Card 8 -->
+                <article class="product-card bg-white overflow-hidden" role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-3 left-3 z-10 flex gap-2">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                            <span class="badge bg-green-800 border-green-800 text-white">Save 10%</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&h=600&fit=crop" 
+                                 alt="Adventure Vest Olive - Stylish sneakers on vibrant backdrop" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=600&h=600&fit=crop" 
+                                 alt="Adventure Vest Olive - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="product-info">
+                        <h3 class="text-sm font-bold text-gray-900 uppercase mb-2">
+                            Adventure Vest Olive
+                        </h3>
+                        
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="flex star-rating" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-xs text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-lg font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <!-- Product Card 9 -->
+                <article class="product-card bg-white overflow-hidden" role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-3 left-3 z-10 flex gap-2">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1588099768531-a72d4a198538?w=600&h=600&fit=crop" 
+                                 alt="Wilderness Beanie Charcoal - Coffee cup on wooden table" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&h=600&fit=crop" 
+                                 alt="Wilderness Beanie Charcoal - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="product-info">
+                        <h3 class="text-sm font-bold text-gray-900 uppercase mb-2">
+                            Wilderness Beanie Charcoal
+                        </h3>
+                        
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="flex star-rating" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-xs text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-lg font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <!-- Product Card 10 -->
+                <article class="product-card bg-white overflow-hidden" role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-3 left-3 z-10 flex gap-2">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                            <span class="badge bg-green-800 border-green-800 text-white">Save 10%</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&h=600&fit=crop" 
+                                 alt="Expedition Pants Stone - Premium shoes on display" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1581101767113-1677fc2beaa8?w=600&h=600&fit=crop" 
+                                 alt="Expedition Pants Stone - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="product-info">
+                        <h3 class="text-sm font-bold text-gray-900 uppercase mb-2">
+                            Expedition Pants Stone
+                        </h3>
+                        
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="flex star-rating" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-xs text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-lg font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+
+        <!-- Mobile Grid -->
+        <div class="md:hidden px-4 sm:px-6">
+            <div id="mobileProductGrid" class="mobile-grid" role="list" aria-label="Best selling products">
+                
+                <!-- First 4 products visible initially -->
+                <article class="product-card bg-white overflow-hidden" role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-2 left-2 z-10 flex flex-col gap-1">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600&fit=crop" 
+                                 alt="Outside Vibes T-Shirt Sunshine" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1545127398-14699f92334b?w=600&h=600&fit=crop" 
+                                 alt="Outside Vibes T-Shirt Sunshine - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="p-3">
+                        <h3 class="text-xs font-bold text-gray-900 uppercase mb-1">
+                            Outside Vibes T-Shirt Sunshine
+                        </h3>
+                        
+                        <div class="flex items-center gap-1 mb-1">
+                            <div class="flex star-rating text-xs" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-[10px] text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-base font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <article class="product-card bg-white overflow-hidden" role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-2 left-2 z-10 flex flex-col gap-1">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                            <span class="badge bg-green-800 border-green-800 text-white">Save 10%</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600&h=600&fit=crop" 
+                                 alt="Hike Bottle Outside Vibes" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600&h=600&fit=crop" 
+                                 alt="Hike Bottle Outside Vibes - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="p-3">
+                        <h3 class="text-xs font-bold text-gray-900 uppercase mb-1">
+                            Hike Bottle Outside Vibes
+                        </h3>
+                        
+                        <div class="flex items-center gap-1 mb-1">
+                            <div class="flex star-rating text-xs" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-[10px] text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-base font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <article class="product-card bg-white overflow-hidden" role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-2 left-2 z-10 flex flex-col gap-1">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=600&fit=crop" 
+                                 alt="Rest in Nature T-Shirt Charcoal" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&h=600&fit=crop" 
+                                 alt="Rest in Nature T-Shirt Charcoal - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="p-3">
+                        <h3 class="text-xs font-bold text-gray-900 uppercase mb-1">
+                            Rest in Nature T-Shirt Charcoal
+                        </h3>
+                        
+                        <div class="flex items-center gap-1 mb-1">
+                            <div class="flex star-rating text-xs" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-[10px] text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-base font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <article class="product-card bg-white overflow-hidden" role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-2 left-2 z-10 flex flex-col gap-1">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                            <span class="badge bg-green-800 border-green-800 text-white">Save 10%</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=600&h=600&fit=crop" 
+                                 alt="Outside Vibes Cap Forest Green" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1603833797131-3c0a60c4e9f3?w=600&h=600&fit=crop" 
+                                 alt="Outside Vibes Cap Forest Green - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="p-3">
+                        <h3 class="text-xs font-bold text-gray-900 uppercase mb-1">
+                            Outside Vibes Cap Forest Green
+                        </h3>
+                        
+                        <div class="flex items-center gap-1 mb-1">
+                            <div class="flex star-rating text-xs" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-[10px] text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-base font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <!-- Hidden products initially (6 more) -->
+                <article class="product-card bg-white rounded-lg overflow-hidden hidden" data-hidden-product role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-2 left-2 z-10 flex flex-col gap-1">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop" 
+                                 alt="Mountain Peak Jacket Navy" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=600&fit=crop" 
+                                 alt="Mountain Peak Jacket Navy - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="p-3">
+                        <h3 class="text-xs font-bold text-gray-900 uppercase mb-1">
+                            Mountain Peak Jacket Navy
+                        </h3>
+                        
+                        <div class="flex items-center gap-1 mb-1">
+                            <div class="flex star-rating text-xs" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-[10px] text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-base font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <article class="product-card bg-white rounded-lg overflow-hidden hidden" data-hidden-product role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-2 left-2 z-10 flex flex-col gap-1">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                            <span class="badge bg-green-800 border-green-800 text-white">Save 10%</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=600&h=600&fit=crop" 
+                                 alt="Trail Runner Shoes Midnight" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=600&fit=crop" 
+                                 alt="Trail Runner Shoes Midnight - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="p-3">
+                        <h3 class="text-xs font-bold text-gray-900 uppercase mb-1">
+                            Trail Runner Shoes Midnight
+                        </h3>
+                        
+                        <div class="flex items-center gap-1 mb-1">
+                            <div class="flex star-rating text-xs" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-[10px] text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-base font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <article class="product-card bg-white rounded-lg overflow-hidden hidden" data-hidden-product role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-2 left-2 z-10 flex flex-col gap-1">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=600&h=600&fit=crop" 
+                                 alt="Summit Hoodie Slate Gray" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1606078363854-c5aa5c9a7c94?w=600&h=600&fit=crop" 
+                                 alt="Summit Hoodie Slate Gray - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="p-3">
+                        <h3 class="text-xs font-bold text-gray-900 uppercase mb-1">
+                            Summit Hoodie Slate Gray
+                        </h3>
+                        
+                        <div class="flex items-center gap-1 mb-1">
+                            <div class="flex star-rating text-xs" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-[10px] text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-base font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <article class="product-card bg-white rounded-lg overflow-hidden hidden" data-hidden-product role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-2 left-2 z-10 flex flex-col gap-1">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                            <span class="badge bg-green-800 border-green-800 text-white">Save 10%</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&h=600&fit=crop" 
+                                 alt="Adventure Vest Olive" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=600&h=600&fit=crop" 
+                                 alt="Adventure Vest Olive - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="p-3">
+                        <h3 class="text-xs font-bold text-gray-900 uppercase mb-1">
+                            Adventure Vest Olive
+                        </h3>
+                        
+                        <div class="flex items-center gap-1 mb-1">
+                            <div class="flex star-rating text-xs" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-[10px] text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-base font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <article class="product-card bg-white rounded-lg overflow-hidden hidden" data-hidden-product role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-2 left-2 z-10 flex flex-col gap-1">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1588099768531-a72d4a198538?w=600&h=600&fit=crop" 
+                                 alt="Wilderness Beanie Charcoal" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&h=600&fit=crop" 
+                                 alt="Wilderness Beanie Charcoal - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="p-3">
+                        <h3 class="text-xs font-bold text-gray-900 uppercase mb-1">
+                            Wilderness Beanie Charcoal
+                        </h3>
+                        
+                        <div class="flex items-center gap-1 mb-1">
+                            <div class="flex star-rating text-xs" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-[10px] text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-base font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+                <article class="product-card bg-white rounded-lg overflow-hidden hidden" data-hidden-product role="listitem">
+                    <div class="relative">
+                        <div class="absolute top-2 left-2 z-10 flex flex-col gap-1">
+                            <span class="badge bg-white border-gray-900 text-gray-900">Best Seller</span>
+                            <span class="badge bg-green-800 border-green-800 text-white">Save 10%</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&h=600&fit=crop" 
+                                 alt="Expedition Pants Stone" 
+                                 class="default-image"
+                                 loading="lazy">
+                            <img src="https://images.unsplash.com/photo-1581101767113-1677fc2beaa8?w=600&h=600&fit=crop" 
+                                 alt="Expedition Pants Stone - Alternative view" 
+                                 class="hover-image"
+                                 loading="lazy">
+                        </div>
+                    </div>
+                    
+                    <div class="p-3">
+                        <h3 class="text-xs font-bold text-gray-900 uppercase mb-1">
+                            Expedition Pants Stone
+                        </h3>
+                        
+                        <div class="flex items-center gap-1 mb-1">
+                            <div class="flex star-rating text-xs" aria-label="Rated 5 out of 5 stars">
+                                <span aria-hidden="true">★★★★★</span>
+                            </div>
+                            <span class="text-[10px] text-gray-600">1234 Reviews</span>
+                        </div>
+                        
+                        <p class="text-base font-bold text-gray-900">$104.95</p>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- Show More Button (Mobile Only) -->
+            <button id="showMoreBtn" 
+                    class="w-full mt-6 bg-gray-900 text-white font-bold py-4 px-6 rounded-full hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
+                    aria-expanded="false"
+                    aria-controls="mobileProductGrid">
+                <span id="btnText">Show More</span>
+                <svg id="btnIcon" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </button>
+        </div>
+
+        </div> <!-- End container-custom -->
+
+    </section>
+
+    <!-- JavaScript for Mobile Show More functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const showMoreBtn = document.getElementById('showMoreBtn');
+            const btnText = document.getElementById('btnText');
+            const btnIcon = document.getElementById('btnIcon');
+            const hiddenProducts = document.querySelectorAll('[data-hidden-product]');
+            let isExpanded = false;
+
+            if (showMoreBtn) {
+                showMoreBtn.addEventListener('click', function() {
+                    isExpanded = !isExpanded;
+                    
+                    hiddenProducts.forEach(function(product) {
+                        if (isExpanded) {
+                            product.classList.remove('hidden');
+                        } else {
+                            product.classList.add('hidden');
+                        }
+                    });
+
+                    // Update button text and icon
+                    if (isExpanded) {
+                        btnText.textContent = 'Show Less';
+                        btnIcon.classList.add('rotate-180');
+                        showMoreBtn.setAttribute('aria-expanded', 'true');
+                    } else {
+                        btnText.textContent = 'Show More';
+                        btnIcon.classList.remove('rotate-180');
+                        showMoreBtn.setAttribute('aria-expanded', 'false');
+                        
+                        // Scroll back to top of products section smoothly
+                        document.getElementById('mobileProductGrid').scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'start' 
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

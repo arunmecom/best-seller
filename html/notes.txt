@@ -1,0 +1,24 @@
+Colors
+#231F20
+#5C553A
+#FFFFFA
+#5C7962
+#707070
+#1C1D1D
+#DDD6D7
+
+
+Fonts - Google font
+Source Serif Pro
+Bebas Neue
+Poppins
+
+text-xs - 12px - 0.75rem
+text-base - 16px - 1rem
+text-lg - 18px - 1.125rem
+text-4xl - 36px 2.25rem
+
+Letter spacing 
+tracking-[-0.01em] - -1%
+tracking-[0.03em] - 3%
+tracking-[0.06em] - 6%
