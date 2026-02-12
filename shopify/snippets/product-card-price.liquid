@@ -1,0 +1,22 @@
+{% comment %}
+  Renders product price and compare-at price.
+  Pass the 'product' object when rendering.
+{% endcomment %}
+
+<div class="flex items-center gap-2">
+  {%- if product.compare_at_price > product.price -%}
+    {% comment %} Sale Price {% endcomment %}
+    <p class="text-base font-poppins font-medium text-[#1C1D1D]">
+      {{ product.price | money }}
+    </p>
+    {% comment %} Original Price (Strikethrough) {% endcomment %}
+    <p class="text-sm font-poppins text-[#707070] line-through">
+      {{ product.compare_at_price | money }}
+    </p>
+  {%- else -%}
+    {% comment %} Normal Price {% endcomment %}
+    <p class="text-base font-poppins font-medium text-[#1C1D1D]">
+      {{ product.price | money }}
+    </p>
+  {%- endif -%}
+</div>

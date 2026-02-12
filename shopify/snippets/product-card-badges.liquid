@@ -1,0 +1,21 @@
+{% comment %}
+  Renders badges based on product tags and price difference.
+  Minimal logic: Checks for 'best-seller' tag and calculates % off.
+{% endcomment %}
+
+<div class="absolute top-3 left-3 z-10 flex w-[calc(100%-1.5rem)] justify-between pointer-events-none">
+  {% if product.tags contains 'Best Seller' %}
+    <span class="badge font-bebas bg-white border border-black text-black tracking-[0.06em] px-2 py-0.5 text-xs uppercase">
+      Best Seller
+    </span>
+  {% else %}
+    <div></div> {% endif %}
+
+  {% if product.compare_at_price > product.price %}
+    {% assign savings = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}
+    <span class="badge font-bebas bg-[#5f7763] border border-black text-white tracking-[0.06em] px-2 py-0.5 text-xs uppercase">
+      Save {{ savings }}%
+    </span>
+  {% endif %}
+
+</div>

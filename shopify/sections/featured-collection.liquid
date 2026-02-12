@@ -1,0 +1,131 @@
+<!-- Best Sellers Section -->
+{% assign collection = collections[section.settings.collection] %}
+<section class="py-12" aria-labelledby="best-sellers-heading">
+  <!-- Section Header -->
+  <header class="max-w-[1664px] mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+    <div class="flex items-center justify-center md:justify-between">
+      <h2
+        id="best-sellers-heading"
+        class="text-[28px] font-source md:text-[40px] font-[900] text-[#231F20] tracking-[-0.01em]"
+      >
+        {{ section.settings.title | default: section.settings.collection.title | default: 'Best Sellers' }}
+      </h2>
+      <!-- Desktop: Shop All Link -->
+      {% if section.settings.extra_button_label != blank %}
+        <a
+          href="{{ section.settings.extra_button_link }}"
+          class="hidden md:flex font-poppins items-center text-[14px] font-[600] text-[#5C553A] tracking-[0.03em] gap-2"
+        >
+          {{ section.settings.extra_button_label }}
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.33337 10H16.6667M16.6667 10L11.6667 5M16.6667 10L11.6667 15" stroke="#5C553A" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      {% endif %}
+    </div>
+  </header>
+
+  <!-- Desktop Carousel -->
+  <div class="hidden md:block">
+    <div class="max-w-[1664px] mx-auto">
+      <div class="pl-4 sm:pl-6 lg:pl-8">
+        <div
+          class="flex flex-nowrap gap-4 overflow-x-auto scrollbar-custom pb-6 snap-x snap-mandatory"
+          role="list"
+          aria-label="Best selling products"
+        >
+          <!-- Product Card 1 -->
+          {% if collection.products.size > 0 %}
+            {% for product in collection.products %}
+              {% render 'product-card', product: product, class: 'snap-start w-[calc(22%-1rem)] min-w-[280px]' %}
+            {% endfor %}
+
+          {% else %}
+            <p class="text-center py-10">Please select a collection to display products.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Mobile Grid -->
+  <div class="md:hidden">
+    <div class="max-w-[90%] mx-auto">
+      <div
+        id="mobileProductGrid"
+        class="mobile-grid grid grid-cols-2 gap-4"
+        role="list"
+        aria-label="Best selling products"
+      >
+        {% if collection.products.size > 0 %}
+          {% for product in collection.products %}
+            {% assign extra_class = '' %}
+
+            {% if forloop.index > 4 %}
+              {% assign extra_class = 'hidden opacity-0 transition-all duration-500' %}
+            {% endif %}
+            {% render 'product-card', product: product, class: extra_class %}
+          {% endfor %}
+
+        {% else %}
+          <p class="text-center py-10">Please select a collection to display products.</p>
+        {% endif %}
+      </div>
+
+      <!-- Show More Button (Mobile Only) -->
+      <button
+        id="showMoreBtn"
+        class="w-full mt-6 bg-[#1C1D1D] text-white font-poppins text-base py-4 px-6 rounded-full hover:bg-[#231F20] transition-colors flex items-center justify-center gap-2"
+        aria-expanded="false"
+        aria-controls="mobileProductGrid"
+      >
+        <span id="btnText" class="tracking-[0.03em]">Show More</span>
+      </button>
+    </div>
+  </div>
+</section>
+<script src="{{ 'show-more-mobile.js' | asset_url }}" defer="defer"></script>
+{% schema %}
+{
+  "name": "Dynamic Best Sellers",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select Collection"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading Override",
+      "placeholder": "Best Sellers"
+    },
+    {
+      "type": "header",
+      "content": "Secondary Action Button"
+    },
+    {
+      "type": "text",
+      "id": "extra_button_label",
+      "label": "Button Label",
+      "info": "Displays next to the heading"
+    },
+    {
+      "type": "url",
+      "id": "extra_button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'Shop All' Link",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featuerd Collection"
+    }
+  ]
+}
+{% endschema %}

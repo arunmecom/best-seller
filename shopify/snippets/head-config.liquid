@@ -1,0 +1,111 @@
+  {% comment %} Global Theme Configuration: Includes typography, Tailwind CSS setup, and core product card styling components. {% endcomment %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@500&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'primary': '#1c1d1d'
+          },
+          fontFamily: {
+            'source': ['"Source Serif 4"', 'serif'],
+            'bebas': ['"Bebas Neue"', 'sans-serif'],
+            'poppins': ['Poppins', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom scrollbar styles for desktop carousel */
+    .scrollbar-custom::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .scrollbar-custom::-webkit-scrollbar-track {
+      background: #DDD6D7;
+      border-radius: 10px;
+    }
+
+    .scrollbar-custom::-webkit-scrollbar-thumb {
+      background: #231F20;
+      border-radius: 10px;
+      transition: height 0.3s ease;
+    }
+
+    .scrollbar-custom:hover::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+      background: #231F20;
+    }
+
+    /* Image aspect ratio container */
+    .product-image-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 100%;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    /* Product card border radius */
+    .product-card {
+      border-radius: 10px;
+    }
+
+    /* Product info padding */
+    .product-info {
+      padding: 12px;
+    }
+
+    .product-image-container img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: opacity 0.3s ease;
+    }
+
+    .product-image-container .hover-image {
+      opacity: 0;
+    }
+
+    .product-card:hover .product-image-container .hover-image {
+      opacity: 1;
+    }
+
+    .product-card:hover .product-image-container .default-image {
+      opacity: 0;
+    }
+
+    /* Badge styles */
+    .badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1.5px solid;
+    }
+
+    @media (min-width: 768px) {
+    
+      .badge {
+      font-size: 8px;
+    }
+    }
+  </style>

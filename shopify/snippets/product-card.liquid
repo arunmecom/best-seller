@@ -1,0 +1,29 @@
+{% comment %}
+  Unified Product Card
+  Handles both Mobile and Desktop layouts using responsive classes.
+  Usage: {% render 'product-card', product: product, class: 'your-extra-classes' %}
+{% endcomment %}
+
+<article class="group product-card flex-shrink-0 bg-white overflow-hidden h-full flex flex-col {{ class }}" role="listitem">
+  {% comment %} Badges & Images {% endcomment %}
+  <div class="relative">
+    {% render 'product-card-badges', product: product %}
+    {% render 'product-card-images', product: product %}
+  </div>
+
+  {% comment %} Product Info {% endcomment %}
+  <div class="p-3 md:p-4 flex flex-col flex-grow">
+    <h3 class="text-base md:text-lg text-[#1C1D1D] uppercase mb-2 font-bebas tracking-[0.03em] leading-tight">
+      <a href="{{ product.url }}" class="hover:opacity-70 transition-opacity">
+        {{ product.title }}
+      </a>
+    </h3>
+    <div class="mb-2">
+      {% render 'product-card-review', product: product %}
+    </div>
+
+    <div class="mt-auto">
+      {% render 'product-card-price', product: product %}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,38 @@
+{% comment %}
+  Renders product images with a hover swap effect.
+  Requires parent wrapper to have class="group"
+{% endcomment %}
+
+<div class="product-image-container relative overflow-hidden aspect-square bg-[#F3F3F3]">
+
+  {% if product.media.size > 0 %}
+    
+    {%- assign first_image = product.media.first.preview_image -%}
+
+    <img
+      src="{{ first_image | image_url: width: 600, height: 600, crop: 'center' }}"
+      alt="{{ first_image.alt | escape }}"
+      class="w-full h-full object-cover transition-opacity duration-500 {% if product.media.size > 1 %}group-hover:opacity-0{% endif %}"
+      loading="lazy"
+      width="600"
+      height="600"
+    >
+
+    {% if product.media.size > 1 %}
+      {%- assign second_image = product.media[1].preview_image -%}
+
+      <img
+        src="{{ second_image | image_url: width: 600, height: 600, crop: 'center' }}"
+        alt="{{ second_image.alt | escape }}"
+        class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        loading="lazy"
+        width="600"
+        height="600"
+      >
+    {% endif %}
+
+  {% else %}
+    {{ 'product-1' | placeholder_svg_tag: 'w-full h-full bg-gray-200' }}
+  {% endif %}
+
+</div>
