@@ -6,7 +6,7 @@
 {% comment %} {%- if product.metafields.reviews.rating_count != blank -%} for dynamic review. for now its static {% endcomment %} 
   <div class="flex items-center gap-2 mb-2">
     <div class="flex star-rating" aria-label="Rated {{ product.metafields.reviews.rating.value }} out of 5 stars">
-      <span aria-hidden="true" class="flex">
+      <span aria-hidden="true" class="flex gap-0">
         {%- for i in (1..5) -%}
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
             <path
