@@ -60,11 +60,13 @@
         {% if collection.products.size > 0 %}
           {% for product in collection.products %}
             {% assign extra_class = '' %}
+            {% assign additional_attr = '' %}
 
             {% if forloop.index > 4 %}
               {% assign extra_class = 'hidden opacity-0 transition-all duration-500' %}
+              {% assign additional_attr = 'data-hidden-product' %}
             {% endif %}
-            {% render 'product-card', product: product, class: extra_class %}
+            {% render 'product-card', product: product, class: extra_class, attr: additional_attr %}
           {% endfor %}
 
         {% else %}
@@ -108,7 +110,7 @@
       "type": "text",
       "id": "extra_button_label",
       "label": "Button Label",
-      "info": "Displays next to the heading"
+      "info": "Displays next to the heading (e.g., 'New Arrivals')"
     },
     {
       "type": "url",
@@ -124,7 +126,7 @@
   ],
   "presets": [
     {
-      "name": "Featuerd Collection"
+      "name": "Dynamic Best Sellers"
     }
   ]
 }
